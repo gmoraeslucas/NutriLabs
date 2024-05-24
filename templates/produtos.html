@@ -59,17 +59,14 @@
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>
-        // Função para mostrar o popup
         function showCartPopup() {
             var popup = document.getElementById("cart-popup");
             popup.style.display = "block";
-            // Ocultar o popup após 3 segundos
             setTimeout(function(){
                 popup.style.display = "none";
             }, 3000);
         }
 
-        // Adicionar evento de clique para os botões "Adicionar ao Carrinho"
         var addToCartButtons = document.querySelectorAll(".add-to-cart-button");
         addToCartButtons.forEach(function(button) {
             button.addEventListener("click", function() {

@@ -69,7 +69,6 @@
                     <div class="subscriptions">
                         <h2>Confirmar Assinatura</h2>
                         <form id="subscription-form" action="{{ url_for('confirmar_assinatura', cart_id=cart.id) }}" method="post" onsubmit="confirmAction(event)">
-                            <!-- Campos do formulário -->
                             <label for="frequency_days">Frequência de entrega (em dias):</label>
                             <input type="number" id="frequency_days" name="frequency_days" required>
                             <br>
@@ -113,7 +112,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function confirmAction(event) {
-            event.preventDefault(); // Evita que o formulário seja enviado imediatamente
+            event.preventDefault();
 
             Swal.fire({
                 title: 'Confirmar Assinatura',

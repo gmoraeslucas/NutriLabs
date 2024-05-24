@@ -65,7 +65,6 @@
                     <p>CEP: {{ subscription.zip_code }}</p>
                     <p>Número da casa: {{ subscription.house_number }}</p>
                     <p>Status: {{ 'Ativa' if subscription.is_active else 'Desativada' }}</p>
-                   <!-- <button class="view-summary-button" onclick="toggleSummary('{{ subscription.id }}')">Ver Resumo</button> -->
                    {% if subscription.is_active %}
                         <form action="{{ url_for('deactivate_subscription', subscription_id=subscription.id) }}" method="post" style="display:inline;" onsubmit="confirmDeactivation(event, this)">
                             <button type="submit" class="deactivate-button">Desativar Assinatura</button>
@@ -100,7 +99,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function confirmDeactivation(event, form) {
-        event.preventDefault(); // Evita o envio imediato do formulário
+        event.preventDefault();
 
         Swal.fire({
             title: 'Desativar Assinatura',

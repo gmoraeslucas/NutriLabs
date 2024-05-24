@@ -107,24 +107,20 @@ def register():
         password = request.form['password']
         confirm_password = request.form['confirm_password']
 
-        # Verificar se as senhas coincidem
         if password != confirm_password:
             error = 'As senhas não coincidem.'
             return render_template('register.html', error=error)
 
-        # Verificar se o nome de usuário já existe
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
             error = 'Nome de usuário já cadastrado.'
             return render_template('register.html', error=error)
 
-        # Verificar se o email já existe
         existing_email = User.query.filter_by(email=email).first()
         if existing_email:
             error = 'Email já cadastrado.'
             return render_template('register.html', error=error)
 
-        # Verificar se o telefone já existe
         existing_phone = User.query.filter_by(phone=phone).first()
         if existing_phone:
             error = 'Telefone já cadastrado.'
@@ -158,7 +154,7 @@ def login():
             error = 'Senha incorreta.'
         else:
             session['user_id'] = user.id
-            session['username'] = user.username  # Adicionado para armazenar o nome do usuário
+            session['username'] = user.username
             return redirect(url_for('home'))
 
         return render_template('login.html', error=error)
@@ -169,7 +165,7 @@ def login():
 @app.route('/produtos')
 def produtos():
     produtos = Product.query.all()
-    print(produtos)  # Isso vai imprimir no console do servidor
+    print(produtos)
     return render_template('produtos.html', produtos=produtos)
 
 
@@ -179,13 +175,11 @@ def add_to_cart(product_id):
         return redirect(url_for('login'))
     
     user_id = session['user_id']
-    # Verifica se existe um carrinho ativo para esse usuário
     cart = Cart.query.filter_by(user_id=user_id).first()
     if not cart:
         cart = Cart(user_id=user_id)
         db.session.add(cart)
 
-    # Verifica se o item já existe no carrinho
     cart_item = CartItem.query.filter_by(cart_id=cart.id, product_id=product_id).first()
     if cart_item:
         cart_item.quantity += 1
@@ -276,7 +270,6 @@ def confirmar_assinatura(cart_id):
         db.session.add(new_credit_card)
         db.session.commit()
 
-        # Reiniciar o carrinho
         CartItem.query.filter_by(cart_id=cart.id).delete()
         db.session.commit()
 
@@ -288,7 +281,7 @@ def confirmar_assinatura(cart_id):
     return render_template('confirmar_assinatura.html', cart=cart, cart_items=cart_items, total=total)
 
 def luhn_check(card_number):
-    card_number = card_number.replace(" ", "")  # Remover espaços em branco
+    card_number = card_number.replace(" ", "") 
     if not card_number.isdigit():
         return False
 
@@ -309,6 +302,6 @@ def luhn_check(card_number):
     return (num_sum % 10) == 0
 
 if __name__ == '__main__':
-    with app.app_context():  # Adicionando o contexto da aplicação
-        db.create_all()  # Cria o banco de dados e as tabelas se não existirem
+    with app.app_context():
+        db.create_all() 
     app.run(debug=True)
