@@ -1,0 +1,562 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121220; /* Cor de fundo para toda a página */
+    margin: 0; /* Remover margens padrão */
+    padding: 0; /* Remover padding padrão */
+    
+}
+
+header, footer {
+    background-color: #f8f8f8;
+    padding: 10px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+}
+
+/* Estilo para a seção de produtos */
+#products {
+    padding: 20px;
+}
+
+#register-button, #login-button{
+    width: 100%; /* Ocupa 100% da largura do contêiner */
+    padding: 10px;
+    border-radius: 5px; /* Bordas arredondadas */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    box-sizing: border-box; /* Inclui o padding na largura total */
+}
+
+/* Estilo para a lista de produtos */
+#product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Cria 3 colunas com largura igual */
+    grid-gap: 10px; /* Espaçamento entre os produtos */
+}
+
+.product {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 320px;
+    height: 300px;
+    text-align: center;
+    background-color: #fff;
+   
+}
+
+.product img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    max-height: 120px;
+}
+
+.product h2 {
+    margin-top: 0; /* Remove a margem superior do título */
+    margin-bottom: 10px; /* Adiciona uma margem inferior para separar o título do conteúdo */
+    overflow: hidden; /* Corta o texto que excede o contêiner */
+    text-overflow: ellipsis; /* Adiciona reticências para indicar que o texto foi cortado */
+    white-space: nowrap; /* Impede que o texto seja quebrado em várias linhas */
+}
+
+.product p {
+    margin: 0; /* Remove todas as margens */
+    overflow: hidden; /* Corta o texto que excede o contêiner */
+    text-overflow: ellipsis; /* Adiciona reticências para indicar que o texto foi cortado */
+    white-space: nowrap; /* Impede que o texto seja quebrado em várias linhas */
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.product {
+    width: calc(25% - 20px); /* 25% de largura com margem entre cada produto */
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+.product-item {
+    border: 2px solid transparent; /* Adiciona uma borda invisível */
+    padding: 10px; /* Adiciona um preenchimento interno de 10px */
+    margin-bottom: 10px; /* Espaçamento inferior */
+    background-color: #fff; /* Fundo branco */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    box-sizing: border-box; /* Faz com que o padding e a borda sejam incluídos no cálculo do tamanho total */
+    max-width: 900px; /* Defina a largura máxima para o conteúdo */
+    margin-left: auto; /* Alinha o item do carrinho à direita */
+    margin-right: auto; /* Alinha o item do carrinho à esquerda */
+}
+
+.product-item:first-child {
+    margin-top: 20px; /* Adiciona uma margem apenas no topo do primeiro produto */
+}
+
+
+/* Estilo para as imagens de produtos */
+.product-image {
+    width: 100%; /* A largura da imagem é 100% da largura do produto */
+    height: auto; /* Mantém a proporção de altura */
+    margin-top: 10px; /* Espaçamento acima da imagem */
+}
+.arrow {
+    content: '';
+    position: absolute;
+    bottom: 175px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 120px;
+    background-image: url('/static/images/seta.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+#cart {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+button {
+    padding: 10px;
+    background-color: #00c1f1;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+button:hover {
+    background-color: #121220;
+}
+
+.button-container {
+    text-align: center; /* Centraliza o conteúdo dentro do contêiner */
+}
+
+/* Estilo para o botão de fechar pedido */
+#checkout-btn {
+    display: inline-block; /* Para que o margin: 0 auto; funcione corretamente */
+    margin-top: 10px; /* Adiciona espaço acima do botão */
+    padding: 10px 20px; /* Adiciona padding ao botão */
+    background-color: #00c1f1; /* Cor de fundo verde */
+    color: white; /* Cor do texto branca */
+    border: none; /* Remove a borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Indica que é clicável */
+    font-size: 16px; /* Tamanho da fonte */
+    width: 1200px; /* Largura do botão */
+    height: 50px; /* Altura do botão */
+}
+
+/* Estilo para o resumo do pedido */
+#order-summary-list {
+    margin-top: 20px; /* Espaçamento superior para o resumo */
+}
+
+/* Estilo para o alerta */
+#alert-add-to-cart {
+    position: fixed;
+    top: 10%; /* Posição no topo da página */
+    right: 10%; /* Posição à direita da página */
+    background-color: #d4edda; /* Fundo verde claro */
+    color: #155724; /* Cor do texto verde escuro */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #c3e6cb; /* Borda verde claro */
+    border-radius: 5px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+
+/* Estilo para a mensagem de sucesso */
+#success-message {
+    text-align: center; /* Centraliza o texto */
+    color: green; /* Cor de texto verde */
+}
+
+#success-message .success-icon {
+    font-size: 40px; /* Tamanho da fonte para o ícone */
+    display: block; /* Exibe o ícone como um bloco */
+    margin: 10px auto; /* Margem acima e abaixo, centraliza o ícone */
+}
+
+
+/* Estilo para cada produto no resumo do pedido */
+.order-summary-product {
+    display: flex; /* Exibe o produto como um flex container para alinhar os elementos */
+    align-items: center; /* Alinha os elementos verticalmente no centro */
+    border: 1px solid #ccc; /* Adiciona uma borda ao redor de cada produto */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 10px; /* Adiciona padding ao redor de cada produto */
+    margin-bottom: 10px; /* Espaçamento inferior entre produtos */
+}
+
+/* Estilo para as imagens nos produtos do resumo do pedido */
+.order-summary-product img {
+    width: 50px; /* Define a largura das imagens como 50px */
+    height: auto; /* Mantém a proporção de altura */
+    margin-right: 10px; /* Adiciona espaço à direita da imagem */
+}
+
+/* Estilo para o texto nos produtos do resumo do pedido */
+.order-summary-product h4,
+.order-summary-product p {
+    margin: 0; /* Remove margens dos elementos */
+}
+
+
+#checkout-btn:hover {
+    background-color: #218838; /* Cor de fundo mais escura ao passar o mouse */
+}
+
+
+/* Estilo para o cabeçalho */
+header {
+    display: flex; /* Habilita flexbox para alinhamento */
+    /*justify-content: center;  Centraliza o conteúdo no cabeçalho */
+    align-items: center; /* Alinha verticalmente */
+    padding: 10px; /* Espaçamento interno do cabeçalho */
+    background-color: #121220; /* Define a cor de fundo desejada */
+    justify-content: space-between; /* Espaça o conteúdo do cabeçalho */
+}
+
+
+
+/* Estilo para o botão de adicionar ao carrinho */
+.add-to-cart-button {
+    display: block; /* Exibe o botão como um bloco */
+    margin: 10px auto; /* Centraliza o botão e adiciona espaço */
+    padding: 8px 16px; /* Adiciona padding ao botão */
+    background-color: #00c1f1; /* Cor de fundo para o botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove a borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Indica que é clicável */
+    font-size: 14px; /* Tamanho da fonte */
+}
+
+.add-to-cart-btn:hover {
+    background-color: #121220; /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilo para o botão de excluir do carrinho */
+.remove-from-cart-btn {
+    margin-top: 10px; /* Adiciona espaço acima do botão */
+    padding: 8px 12px; /* Adiciona padding ao botão */
+    background-color: red; /* Cor de fundo vermelha */
+    color: white; /* Cor do texto branca */
+    border: none; /* Remove a borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Indica que é clicável */
+    font-size: 14px; /* Tamanho da fonte */
+}
+
+.remove-from-cart-btn:hover {
+    background-color: darkred; /* Cor de fundo mais escura ao passar o mouse */
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin: 10px;
+}
+
+
+.cart-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+}
+
+.cart-item h3 {
+    margin-bottom: 10px;
+}
+
+.cart-item p {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.cart-total {
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: right;
+}
+
+
+/* Estilos para o popup */
+#cart-popup {
+    display: none;
+    position: fixed;
+    top: 20px; /* Ajuste a posição vertical conforme necessário */
+    right: 20px; /* Ajuste a posição horizontal conforme necessário */
+    background-color: #d4edda; /* Cor de fundo verde claro */
+    color: #155724; /* Cor do texto */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+/* Estilo para as imagens dos produtos no carrinho */
+.cart-product-image {
+    width: 100px; /* Define a largura das imagens */
+    height: auto; /* Mantém a proporção de altura */
+}
+
+
+/* Estilo para o campo de pesquisa */
+#search {
+    width: 200px; /* Largura do campo de pesquisa, ajuste conforme necessário */
+    padding: 5px; /* Espaçamento interno do campo de pesquisa */
+}
+
+#header-right {
+    display: flex;
+    gap: 10px; /* Espaçamento entre os botões */
+}
+
+/* Estilo para o contêiner da página */
+#page-container {
+    background-color: #121220; /* Cor de fundo clara (Alice Blue) */
+    min-height: 100vh; /* Garante que o contêiner ocupe toda a altura da tela */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+.profile-info {
+    text-align: center;
+}
+
+.profile-info h2 {
+    margin-bottom: 10px;
+}
+
+.profile-info p {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.subscriptions h2 {
+    margin-bottom: 15px;
+}
+
+.subscription {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    position: relative;
+}
+
+.subscription h3 {
+    margin-bottom: 10px;
+}
+
+.subscription p {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+/* Estilo para o contêiner de login */
+#login-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Cor de fundo branca com transparência */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 400px;
+    width: 100%; /* Largura ajustável */
+    margin-bottom: 350px;
+}
+
+/* Estilo para o ícone de usuário e nome */
+#user-info {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px;
+    margin-left: 570px; /* Ajuste o valor conforme necessário */
+}
+
+
+.user-icon {
+    width: 60px; /* Largura do ícone */
+    height: 60px; /* Altura do ícone */
+    border-radius: 50%; /* Ícone circular */
+}
+
+/* Estilo para o nome do usuário (username) */
+#username {
+    color: #00c1f1; /* Define a cor azul para o texto */
+    font-weight: bold; /* Opcional: define o texto em negrito */
+}
+
+
+
+
+/* Estilo para os campos de entrada */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%; /* Ocupa 100% da largura do contêiner */
+    padding: 10px;
+    border-radius: 5px; /* Bordas arredondadas */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    box-sizing: border-box; /* Inclui o padding na largura total */
+}
+
+/* Estilo para o feedback */
+#login-feedback {
+    margin-top: 10px;
+    color: red; /* Cor do texto para feedback de erro */
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+#header-right a {
+    display: inline-block; /* Torna o link semelhante a um botão */
+    padding: 10px 20px; /* Espaçamento interno (padding) para o link */
+    border-radius: 5px; /* Bordas arredondadas */
+    background-color: #007BFF; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    text-decoration: none; /* Remover sublinhado do link */
+    text-align: center; /* Centraliza o texto dentro do botão */
+    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+}
+
+#header-right a:hover {
+    background-color: #0056b3; /* Cor de fundo ao passar o mouse (hover) */
+}
+
+
+/* Estilo para a seção com a imagem de fundo */
+#banner-section {
+    position: relative; /* Posiciona os elementos absolutos em relação a esta seção */
+    height: 300px; /* Defina a altura desejada */
+    width: 100%; /* A largura da seção é 100% do site */
+    background-image: url('/static/images/NUTRI LABS.png');
+}
+
+
+
+
+/* Estilo para a imagem de logo */
+#logo {
+    display: block; /* Garante que a logo seja exibida como um bloco */
+    margin-left: 825px; /* Alinha os botões à direita */
+    width: 280px; /* Ajusta a largura conforme necessário */
+    height: auto; /* Mantém a proporção de altura */
+}
+
+/* Estilo para os botões no cabeçalho */
+#orders, #account {
+    margin-left: 10px; /* Alinha os botões à direita */
+    margin-right: 20px; /* Alinha os botões à direita */
+}
+
+
+/* Estilo para a div user-actions */
+#user-actions {
+    display: flex;
+    flex-direction: column; /* Organiza os botões em uma coluna */
+    gap: 10px; /* Espaçamento entre os botões */
+    margin-top: 10px; /* Espaçamento acima da div */
+    border-right: 5px ; /* Adiciona uma borda à direita */
+    padding-right: 15px; /* Espaçamento entre a borda e o conteúdo */
+}
+
+
+/* Estilo para os botões de Carrinho e Minhas Assinaturas */
+#my-orders-btn, #my-subscriptions-btn, #my-account-btn {
+    padding: 5px 10px; /* Espaçamento interno dos botões */
+    background-color: #007BFF; /* Cor de fundo azul */
+    color: white; /* Cor do texto branca */
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer;
+    text-decoration: none; /* Remover sublinhado dos links */
+}
+
+/* Estilo de hover para os botões */
+#my-orders-btn:hover, #my-subscriptions-btn:hover,  #my-account-btn:hover{
+    background-color: #0056b3; /* Cor de fundo mais escura ao passar o mouse */
+}
+
+.deactivate-button, .view-summary-button {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+.deactivate-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+

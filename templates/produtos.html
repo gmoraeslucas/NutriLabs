@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='images/nutrilabs.png') }}" alt="Logo da Loja Online" id="logo">
+        </a>
+    
+        {% if session.get('user_id') %}
+            <div id="user-info">
+                <a href="{{ url_for('perfil') }}">
+                    <img src="{{ url_for('static', filename='images/login.png') }}" alt="Ícone de usuário" class="user-icon">
+                </a>
+                <span id="username">{{ session.get('username', 'Usuário') }}</span>
+            </div>
+            <div id="header-right">
+                <div id="user-actions">
+                    <a href="{{ url_for('carrinho') }}" id="my-orders-btn">Carrinho</a>
+                    <a href="{{ url_for('logout') }}" id="logout-btn">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <div id="user-actions">
+                <a href="{{ url_for('login') }}" id="my-account-btn">Login/Registro</a>
+            </div>
+        {% endif %}
+    </header>
+    <section id="cart">
+        <div class="content">
+            {% if produtos %}
+                <div class="product-container">
+                    {% for product in produtos %}
+                        <div class="product">
+                            {% if product.image_filename %}
+                                <img src="{{ url_for('static', filename='uploads/' ~ product.image_filename) }}" alt="{{ product.name }}">
+                            {% endif %}
+                            <h2>{{ product.name }}</h2>
+                            <p>Descrição: {{ product.description }}</p>
+                            <p>Preço: R$ {{ "%.2f"|format(product.price) }}</p>
+                            <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post">
+                                <button type="submit" class="add-to-cart-button">Adicionar ao carrinho</button>
+                            </form>
+                        </div>  
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Nenhum produto encontrado.</p>
+            {% endif %}
+        </div>
+    </section>
+    <div id="cart-popup">
+        Produto adicionado ao carrinho!
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        // Função para mostrar o popup
+        function showCartPopup() {
+            var popup = document.getElementById("cart-popup");
+            popup.style.display = "block";
+            // Ocultar o popup após 3 segundos
+            setTimeout(function(){
+                popup.style.display = "none";
+            }, 3000);
+        }
+
+        // Adicionar evento de clique para os botões "Adicionar ao Carrinho"
+        var addToCartButtons = document.querySelectorAll(".add-to-cart-button");
+        addToCartButtons.forEach(function(button) {
+            button.addEventListener("click", function() {
+                showCartPopup();
+            });
+        });
+    </script>
+</body>
+</html>

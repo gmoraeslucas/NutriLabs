@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Home - Suplementos XYZ</title>
+    <style>
+        body {
+            position: relative;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-image: url('/static/images/NUTRI LABS.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='images/nutrilabs.png') }}" alt="Logo da Loja Online" id="logo">
+        </a>
+    
+        {% if session.get('user_id') %}
+            <div id="user-info">
+                <a href="{{ url_for('perfil') }}">
+                    <img src="{{ url_for('static', filename='images/login.png') }}" alt="Ícone de usuário" class="user-icon">
+                </a>
+                <span id="username">{{ session.get('username', 'Usuário') }}</span>
+            </div>
+            <div id="header-right">
+                <div id="user-actions">
+                    <a href="{{ url_for('carrinho') }}" id="my-orders-btn">Carrinho</a>
+                    <a href="{{ url_for('logout') }}" id="logout-btn">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <div id="user-actions">
+                <a href="{{ url_for('login') }}" id="my-account-btn">Login/Registro</a>
+            </div>
+        {% endif %}
+    </header>
+    
+
+    <div id="user-container" style="display: none;">
+        <div id="user-info">
+            <img src="{{ url_for('static', filename='images/login.png') }}" alt="Ícone de usuário" class="user-icon">
+            <span id="username"></span>
+        </div>
+        <div id="user-actions">
+            <a href="{{ url_for('login') }}" id="my-orders-btn">Carrinho</a>
+        </div>
+    </div>
+    <a href="{{ url_for('produtos') }}">
+        <div class="arrow" id="arrow" data-url="{{ url_for('produtos') }}"></div>
+    </a>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

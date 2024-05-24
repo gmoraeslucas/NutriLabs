@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Confirmar Assinatura</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='images/nutrilabs.png') }}" alt="Logo da Loja Online" id="logo">
+        </a>
+    
+        {% if session.get('user_id') %}
+            <div id="user-info">
+                <a href="{{ url_for('perfil') }}">
+                    <img src="{{ url_for('static', filename='images/login.png') }}" alt="Ícone de usuário" class="user-icon">
+                </a>
+                <span id="username">{{ session.get('username', 'Usuário') }}</span>
+            </div>
+            <div id="header-right">
+                <div id="user-actions">
+                    <a href="{{ url_for('carrinho') }}" id="my-orders-btn">Carrinho</a>
+                    <a href="{{ url_for('logout') }}" id="logout-btn">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <div id="user-actions">
+                <a href="{{ url_for('login') }}" id="my-account-btn">Login/Registro</a>
+            </div>
+        {% endif %}
+    </header>
+
+    <section id="cart">
+        <section id="profile">
+            <div class="wrapper">
+                <div class="container">
+                    <div class="subscriptions">
+                       
+                        <h3>Resumo do Carrinho</h3>
+                        <br>
+                        {% for item in cart_items %}
+                            <div class="cart-item">
+                                <h3>Produto: {{ item.product.name }}</h3>
+                                <p>Quantidade: {{ item.quantity }}</p>
+                                <p>Preço unitário: R$ {{ "%.2f"|format(item.product.price) }}</p>
+                                <p>Subtotal: R$ {{ "%.2f"|format(item.product.price * item.quantity) }}</p>
+                            </div>
+                        {% endfor %}
+                        <div class="cart-total">
+                            <p>Total: R$ {{ "%.2f"|format(total) }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="container">
+                    <div class="subscriptions">
+                        <h2>Confirmar Assinatura</h2>
+                        <form id="subscription-form" action="{{ url_for('confirmar_assinatura', cart_id=cart.id) }}" method="post" onsubmit="confirmAction(event)">
+                            <!-- Campos do formulário -->
+                            <label for="frequency_days">Frequência de entrega (em dias):</label>
+                            <input type="number" id="frequency_days" name="frequency_days" required>
+                            <br>
+                            <br>
+                            <label for="zip_code">CEP:</label>
+                            <input type="text" id="zip_code" name="zip_code" required>
+                            <br>
+                            <br>
+                            <label for="house_number">Número da Casa:</label>
+                            <input type="text" id="house_number" name="house_number" required>
+                            <br>
+                            <br>
+                            <h3>Dados do Cartão de Crédito</h3>
+                            <label for="card_number">Número do Cartão:</label>
+                            <input type="text" id="card_number" name="card_number" required>
+                            <br>
+                            <br>
+                            <label for="card_holder_name">Nome do Titular:</label>
+                            <input type="text" id="card_holder_name" name="card_holder_name" required>
+                            <br>
+                            <br>
+                            <label for="expiration_date">Data de Validade (MM/AAAA):</label>
+                            <input type="text" id="expiration_date" name="expiration_date" required>
+                            <br>
+                            <br>
+                            <label for="cvv">CVV:</label>
+                            <input type="text" id="cvv" name="cvv" required>
+                            <br>
+                            <br>
+                            {% if error %}
+                                <p style="color: red;">{{ error }}</p>
+                            {% endif %}
+                            <button id="register-button" type="submit">Confirmar Assinatura</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmAction(event) {
+            event.preventDefault(); // Evita que o formulário seja enviado imediatamente
+
+            Swal.fire({
+                title: 'Confirmar Assinatura',
+                text: "Você tem certeza que deseja confirmar a assinatura?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim, confirmar!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('subscription-form').submit();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

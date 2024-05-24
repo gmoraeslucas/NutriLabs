@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Perfil - Suplementos XYZ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='images/nutrilabs.png') }}" alt="Logo da Loja Online" id="logo">
+        </a>
+    
+        {% if session.get('user_id') %}
+            <div id="user-info">
+                <a href="{{ url_for('perfil') }}">
+                    <img src="{{ url_for('static', filename='images/login.png') }}" alt="Ícone de usuário" class="user-icon">
+                </a>
+                <span id="username">{{ session.get('username', 'Usuário') }}</span>
+            </div>
+            <div id="header-right">
+                <div id="user-actions">
+                    <a href="{{ url_for('carrinho') }}" id="my-orders-btn">Carrinho</a>
+                    <a href="{{ url_for('logout') }}" id="logout-btn">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <div id="user-actions">
+                <a href="{{ url_for('login') }}" id="my-account-btn">Login/Registro</a>
+            </div>
+        {% endif %}
+    </header>
+    <section id="cart">
+        <section id="profile">
+            <div class="wrapper">
+                <div class="container">
+                    <div class="profile">
+        
+        <img src="{{ url_for('static', filename='images/login.png') }}" alt="Foto de Perfil" class="profile-pic">
+                    <div class="profile-info">
+                        <h1>Perfil de {{ user.username }}</h1>
+                        <br>
+                        <p>Email: {{ user.email }}</p>
+                        <p>Telefone: {{ user.phone }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="subscriptions">
+        <h2>Assinaturas Ativas</h2>
+        {% if subscriptions %}
+            {% for subscription in subscriptions %}
+                <div class="subscription">
+                    <p>Frequência de entrega: {{ subscription.frequency_days }} dias</p>
+                    <p>CEP: {{ subscription.zip_code }}</p>
+                    <p>Número da casa: {{ subscription.house_number }}</p>
+                    <p>Status: {{ 'Ativa' if subscription.is_active else 'Desativada' }}</p>
+                   <!-- <button class="view-summary-button" onclick="toggleSummary('{{ subscription.id }}')">Ver Resumo</button> -->
+                   {% if subscription.is_active %}
+                        <form action="{{ url_for('deactivate_subscription', subscription_id=subscription.id) }}" method="post" style="display:inline;" onsubmit="confirmDeactivation(event, this)">
+                            <button type="submit" class="deactivate-button">Desativar Assinatura</button>
+                        </form>
+                    {% else %}
+                        <button class="deactivate-button" disabled>Assinatura Desativada</button>
+                    {% endif %}
+                    <div class="subscription-summary" id="summary-{{ subscription.id }}">
+                        <!--
+                        <h3>Resumo da Assinatura</h3>
+                        <p>Produtos:</p>
+                        <ul>
+                            {% set total = 0 %}
+                            {% for item in subscription.cart.cart_items %}
+                                <li>{{ item.product.name }} - Quantidade: {{ item.quantity }} - Preço: R$ {{ "%.2f"|format(item.product.price) }} - Subtotal: R$ {{ "%.2f"|format(item.product.price * item.quantity) }}</li>
+                                {% set total = total + (item.product.price * item.quantity) %}
+                            {% endfor %}
+                        </ul>
+                        <p>Total: R$ {{ "%.2f"|format(total) }}</p>
+                        -->
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Você não possui assinaturas ativas.</p>
+        {% endif %}
+    </div>
+</div>
+</div>
+</section>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDeactivation(event, form) {
+        event.preventDefault(); // Evita o envio imediato do formulário
+
+        Swal.fire({
+            title: 'Desativar Assinatura',
+            text: "Você tem certeza que deseja desativar a assinatura?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, desativar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+</script>
+</body>
+</html>
