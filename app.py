@@ -62,7 +62,7 @@ class CreditCard(db.Model):
     subscription_id = db.Column(db.Integer, db.ForeignKey('subscription.id'), nullable=False)
     card_number = db.Column(db.String(20), nullable=False)
     card_holder_name = db.Column(db.String(100), nullable=False)
-    expiration_date = db.Column(db.String(7), nullable=False)  # Formato MM/YYYY
+    expiration_date = db.Column(db.String(7), nullable=False) 
     cvv = db.Column(db.String(4), nullable=False)
 
     subscription = db.relationship('Subscription', backref=db.backref('credit_card', uselist=False))
@@ -229,10 +229,8 @@ def confirmar_assinatura(cart_id):
     
     user_id = session['user_id']
     cart = Cart.query.get_or_404(cart_id)
-    
     if cart.user_id != user_id:
         return 'Operação não permitida.', 403
-
     if request.method == 'POST':
         frequency_days = request.form['frequency_days']
         zip_code = request.form['zip_code']
@@ -241,13 +239,11 @@ def confirmar_assinatura(cart_id):
         card_holder_name = request.form['card_holder_name']
         expiration_date = request.form['expiration_date']
         cvv = request.form['cvv']
-
         if not luhn_check(card_number):
             error = 'Número do cartão de crédito inválido.'
             cart_items = cart.cart_items
             total = sum(item.product.price * item.quantity for item in cart_items)
             return render_template('confirmar_assinatura.html', cart=cart, cart_items=cart_items, total=total, error=error)
-
         new_subscription = Subscription(
             user_id=user_id,
             cart_id=cart.id,
@@ -255,10 +251,8 @@ def confirmar_assinatura(cart_id):
             zip_code=zip_code,
             house_number=house_number
         )
-
         db.session.add(new_subscription)
         db.session.commit()
-
         new_credit_card = CreditCard(
             subscription_id=new_subscription.id,
             card_number=card_number,
@@ -266,18 +260,14 @@ def confirmar_assinatura(cart_id):
             expiration_date=expiration_date,
             cvv=cvv
         )
-
         db.session.add(new_credit_card)
         db.session.commit()
-
         CartItem.query.filter_by(cart_id=cart.id).delete()
         db.session.commit()
-
         return redirect(url_for('home'))
 
     cart_items = cart.cart_items
     total = sum(item.product.price * item.quantity for item in cart_items)
-
     return render_template('confirmar_assinatura.html', cart=cart, cart_items=cart_items, total=total)
 
 def luhn_check(card_number):
